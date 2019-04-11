@@ -1,0 +1,66 @@
+* {
+  border: 1px solid pink;
+}
+
+body {
+  height: 100vh;
+  diplay: grid;
+  grid-template-columns: repeat(3);
+  grid-template-rows: 2;
+}
+
+header {
+  align-content: center;
+  background-color: #1F1F3D;
+  display: flex;
+  justify-content: space-between;
+}
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  color: white;
+}
+.yo {
+  color: #FEC40E;
+}
+
+aside {
+  background-color: #587A8B;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 20%;
+}
+nav {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+
+}
+form {
+  display:  flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+}
+
+button {
+  background-color: #1F1F3D;
+  color: white;
+  height: 40px;
+  width: 90%;
+}
+input {
+  height: 40px;
+  width: 90%; 
+}
+
+textarea {
+  width: 90%;
+}
+
+main {
+  display: flex;
+  width: 80%;
+}
