@@ -1,34 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Check Yo Self | Welcome</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
   <header>
     <h1>CHECK <span class="yo">YO'</span> SELF</h1>
-    <form action="">
-    <input class="search-input" type="text">
+    <form class ="search-form" action="">
+      <div class="icon-holder">
+      <img src="images/search.svg" class="search-icon"></img>
+      </div>
+      <input class="search-input" type="text">
     </form>
   </header>
   <main>
-	<aside>
     <nav>
-        <form action="">
-            <label for="">ToDo Title</label>
-            <input class="todo-title" type="text">
-            <label for="">ToDo Item</label>
-            <textarea class="todo-item" type="text"></textarea>
-            <button class="make-task">Make Task List</button>
-            <button class="clear-all">Clear All</button>
+        <form class="nav-form" action="">
+            <label for="">Task Title</label>
+            <input class="task-title" type="text">
+            <label for="">Task Item</label>
+            <div>
+            <textarea class="task-item" type="text"></textarea>
+            <img class="plus-icon" src="images/search.svg" alt="">
+            </div>
+            <button class="make-task-button">Make Task List</button>
+            <button class="clear-all-button">Clear All</button>
             <hr>
-            <button clas="filter">Filter By Urgency</button>
+            <button class="filter-button">Filter By Urgency</button>
           </form>
     </nav>
-  </aside>
-  <section>
-    This is where the cards go!
+  <section class ="card-field">
+    Please start a task....
   </section>
   </main>
   <script src="todo-list.js"></script>
