@@ -10,6 +10,7 @@ var allTaskCards = [];
 
 makeTaskButton.addEventListener('click', bigBoy);
 taskItemButton.addEventListener('click', populateNavList);
+// cardField.addEventListener('click')
 
 function populateNavList(event){
   var taskList = document.createElement('ul');
@@ -20,13 +21,7 @@ function populateNavList(event){
       <span class="nav-list-item">${taskItemInput.value}</span></li>
        </ul>`
       makeTaskListObject(taskItemInput.value);
-      clearTaskItemInput();
-     
-};
-
-function clearNavList(){
-  var taskList = document.createElement('ul');
-  taskList.innerHTML = "";
+      clearTaskItemInput(); 
 };
 
 function clearTaskItemInput(){
@@ -34,24 +29,50 @@ function clearTaskItemInput(){
 };
 
 function makeTaskListObject(text){
- var object = new TaskItems(text)
+var object = new TaskItems(text)
 console.log(object);
 taskItems.push(object);
 console.log(taskItems);
-}
+};
 
-function populateCard(task) {
+function bigBoy(newTask){
+  instantiateTask()
+  // getListItems();
+  populateCard(newTask)
+  taskItems = [];
+  clearNavList();
+  taskTitleInput.value = "";
+  };
+
+  function instantiateTask() {
+    var newTask = new Task(taskTitleInput.value, taskItems);
+    console.log(newTask)
+    allTaskCards.push(newTask);
+    newTask.saveToStorage(allTaskCards);
+    return newTask;
+  };
+
+  // function getListItems(){
+  //     var cardListArea = document.querySelector('.card-list')
+  //     taskItems.forEach(function(elem) {
+  //     var cardList = document.createElement("li");
+  //     cardListArea.append(cardList);
+  //     // cardList.innerHTML${elem}
+  //     }
+  // };
+
+function populateCard(newTask) {
   var cardPlaceholder = document.createElement("div");
   cardField.prepend(cardPlaceholder);
   cardPlaceholder.innerHTML = 
-        `<article class="task-card-container" data-id="XXX" >
+        `<article data-id = ${newTask.id} class="task-card-container" >
         <section class="card-header>
-        <h2 contentEditable = "true" class="card-title">"XXX"</h2>
+        <h2 contentEditable = "true" class="card-title">${newTask.title}</h2>
         </section>
-        <body> 
-        <ul>
+        <body "card-body"> 
+        <ul class="card-list">
         <img>
-        <li contentEditable = "true" class="card-item">"XXX"</li>
+        <li class="card-item">XXX</li>
         </ul>
         </body>
         <section class="card-footer">
@@ -63,19 +84,8 @@ function populateCard(task) {
         </article>`
 };
 
-function bigBoy(newTask){
-  instantiateTask()
-  populateCard()
-  taskItems = [];
-  clearNavList();
-  taskTitleInput.value = "";
-  }
+  function clearNavList(){
+    var taskList = document.createElement('ul');
+    taskList.innerHTML = "";
+  };
 
-function instantiateTask () {
-  var newTask = new Task(taskItemInput.value, taskItems);
-  console.log(newTask)
-  allTaskCards.push(newTask);
-  newTask.saveToStorage(allTaskCards);
-  return newTask;
-
-};
