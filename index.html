@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="normalize.css">
 </head>
 <body>
   <header>
@@ -14,27 +15,30 @@
       <div class="icon-holder">
       <img src="images/search.svg" class="search-icon"></img>
       </div>
-      <input class="search-input" type="text">
+      <input class="search-input" placeholder="Search" type="text">
     </form>
   </header>
   <main>
     <nav>
-        <form class="nav-form" action="">
+        <form class="nav-form">
             <label for="">Task Title</label>
             <input class="task-title" type="text">
-            <label for="">Task Item</label>
+            <section class="nav-task-list">
+            </section>
             <div>
-            <textarea class="task-item" type="text"></textarea>
-            <img class="plus-icon" src="images/search.svg" alt="">
+              <textarea class="task-item" type="text"></textarea>
+              <div class="add-task-icon-box">
+              <img class="plus-icon" src="images/plus.svg">
+              </div>
             </div>
-            <button class="make-task-button">Make Task List</button>
-            <button class="clear-all-button">Clear All</button>
+            <input type="button" class="make-task-button button">Make Task List</button>
+            <input type="button" class="clear-all-button button">Clear All</button>
             <hr>
-            <button class="filter-button">Filter By Urgency</button>
+            <input type="button" class="filter-button button">Filter By Urgency</button>
           </form>
     </nav>
   <section class ="card-field">
-    Please start a task....
+  
   </section>
   </main>
   <script src="todo-list.js"></script>
