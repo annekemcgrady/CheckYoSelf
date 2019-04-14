@@ -40,7 +40,6 @@ console.log(taskItems);
 function bigBoy(event){
   var todoList = instantiateTask()
   populateCard(todoList)
-  getListItems(taskItems);
   taskItems = [];
   clearTaskItemInput()
   // clearNavList();
@@ -52,8 +51,10 @@ function bigBoy(event){
     var newTask = new Task(taskTitleInput.value, taskItems);
     console.log(newTask)
     allTaskCards.push(newTask);
+    console.log(allTaskCards)
     newTask.saveToStorage(allTaskCards);
     return newTask;
+    console.log(allTaskCards)
   };
 
   //populates the card on the DOM
@@ -65,6 +66,7 @@ function populateCard(text) {
         </section>
         <body class="card-body"> 
         <ul class="card-list" data-id=${text.id}>
+        ${findListItems(text)}
         </ul>
         </body>
         <section class="card-footer">
@@ -77,24 +79,19 @@ function populateCard(text) {
         cardField.insertAdjacentHTML('afterbegin', newCard);
 };
 
-//get the array of objects
-//go through the array and append the content of each to the card on the DOM
-function getListItems(items){
-  console.log(items[0].id)
-  var cardListArea = document.querySelector('.card-list')
-  taskItems.forEach(function(elem, index) {
-  console.log(elem.content)
-  })
-  // genListItem(elem)
+//go through the array of Tasks and append the content of property "items" of each to the card on the DOM
+function findListItems(tasks){
+  var gotListItems ='';
+  for(var i= 0; i < tasks.items.length; i++) {
+    gotListItems +=
+    `<li class="list-item>
+    <input type="image" class="done-icon" src="images/checkbox.svg" data-id=${tasks.items[i].id} id="index ${i}"/>
+    <p class="card-todo-item">${tasks.items[i].content}</p>
+     </li>`
+  }
+ return gotListItems;
+ console.log(gotListItems)
 };
 
-// function genListItem(elem){
-//   var cardListArea = document.querySelector('.card-list')
-//   console.log(elem.content)
-  
-// }
 
-  // function clearNavList(){
-  //   taskList.innerHTML = "";
-  // };
 
