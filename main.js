@@ -6,11 +6,11 @@ var taskItemButton = document.querySelector('.add-task-icon-box');
 var makeTaskButton = document.querySelector('.make-task-button');
 var cardField = document.querySelector('.card-field');
 var taskItems = [];
-var allTaskCards = [];
+var allTaskCards = JSON.parse(localStorage.getItem('allTaskCards'))||[];
 
 makeTaskButton.addEventListener('click', bigBoy);
 taskItemButton.addEventListener('click', populateNavList);
-// cardField.addEventListener('click')
+window.addEventListener('load', restoreCards);
 
 function populateNavList(event){
   var taskList = document.createElement('ul');
@@ -93,5 +93,12 @@ function findListItems(tasks){
  console.log(gotListItems)
 };
 
+function restoreCards() {
+  allTaskCards = allTaskCards.map(function(oldTodo) {
+    var restoredCards = new Task(oldTodo.title, oldTodo.items, oldTodo.id, oldTodo.urgent);
+    populateCard(restoredCards);
+    return restoredCards;
+  })
+};
 
 
