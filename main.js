@@ -28,6 +28,7 @@ function clearTaskItemInput(){
   taskItemInput.value = "";
 };
 
+//Makes the little array of list item objects
 function makeTaskListObject(text){
 var object = new TaskItems(text)
 console.log(object);
@@ -35,16 +36,19 @@ taskItems.push(object);
 console.log(taskItems);
 };
 
-function bigBoy(newTask){
-  instantiateTask()
-  // getListItems();
-  populateCard(newTask)
+//big function to instantiate, populate, clear nav inputs & list
+function bigBoy(event){
+  var todoList = instantiateTask()
+  populateCard(todoList)
+  getListItems(taskItems);
   taskItems = [];
-  clearNavList();
-  taskTitleInput.value = "";
+  clearTaskItemInput()
+  // clearNavList();
+  console.log(taskItems)
   };
 
-  function instantiateTask() {
+  //Instantiates a new instance of the big class Task, puts in big array
+  function instantiateTask(newTask) {
     var newTask = new Task(taskTitleInput.value, taskItems);
     console.log(newTask)
     allTaskCards.push(newTask);
@@ -52,27 +56,15 @@ function bigBoy(newTask){
     return newTask;
   };
 
-  // function getListItems(){
-  //     var cardListArea = document.querySelector('.card-list')
-  //     taskItems.forEach(function(elem) {
-  //     var cardList = document.createElement("li");
-  //     cardListArea.append(cardList);
-  //     // cardList.innerHTML${elem}
-  //     }
-  // };
-
-function populateCard(newTask) {
-  var cardPlaceholder = document.createElement("div");
-  cardField.prepend(cardPlaceholder);
-  cardPlaceholder.innerHTML = 
-        `<article data-id = ${newTask.id} class="task-card-container" >
+  //populates the card on the DOM
+function populateCard(text) {
+  var newCard = 
+        `<article data-id=${text.id} class="task-card-container">
         <section class="card-header>
-        <h2 contentEditable = "true" class="card-title">${newTask.title}</h2>
+        <h2 contentEditable = "true" class="card-title">${text.title}</h2>
         </section>
-        <body "card-body"> 
-        <ul class="card-list">
-        <img>
-        <li class="card-item">XXX</li>
+        <body class="card-body"> 
+        <ul class="card-list" data-id=${text.id}>
         </ul>
         </body>
         <section class="card-footer">
@@ -82,10 +74,27 @@ function populateCard(newTask) {
           <h6>Delete</h6>
           </section>
         </article>`
+        cardField.insertAdjacentHTML('afterbegin', newCard);
 };
 
-  function clearNavList(){
-    var taskList = document.createElement('ul');
-    taskList.innerHTML = "";
-  };
+//get the array of objects
+//go through the array and append the content of each to the card on the DOM
+function getListItems(items){
+  console.log(items[0].id)
+  var cardListArea = document.querySelector('.card-list')
+  taskItems.forEach(function(elem, index) {
+  console.log(elem.content)
+  })
+  // genListItem(elem)
+};
+
+// function genListItem(elem){
+//   var cardListArea = document.querySelector('.card-list')
+//   console.log(elem.content)
+  
+// }
+
+  // function clearNavList(){
+  //   taskList.innerHTML = "";
+  // };
 

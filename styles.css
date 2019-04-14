@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  border: 1px solid pink;
+  /* border: 1px solid pink; */
 }
 
 body {
@@ -50,7 +50,7 @@ h1 {
 
 nav {
   background-color: #587A8B;
-  border-right: 2px solid black;
+  border-right: 1px solid #3C6577;
   padding-top: 25px;
   width: 30%
 }
@@ -111,15 +111,16 @@ div {
 }
 
 .task-title,
-textarea {
+.task-item {
   border: 1px solid #1F1F3D;
   border-radius: 3px;
   height: 45px;
+  margin: 10px 0 10px 0;
   width: 90%; 
 }
 
 hr { 
-  border: 2px solid black;
+  border: 1px solid #3C6577;
   margin-top: 20px;
   width: 100%;
 }
@@ -132,6 +133,7 @@ main {
 
 .card-field {
   background-color: #F3F6F7;
+  border: 1px solid #3C6577;
   font-family: 'Open Sans', sans-serif;
   font-size: 24px;
   width: 70%;
