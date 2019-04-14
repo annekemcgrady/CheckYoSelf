@@ -11,15 +11,17 @@ class Task {
     localStorage.setItem('allTaskCards', stringifiedToDoArray);
     };
 
-    //copied from IdeaBox need to update vars to this project
-// deleteFromStorage(targetId) {
-//   var parsedItems = JSON.parse(localStorage.getItem('ideaArray'));
-//   var itemIndex = parsedItems.findIndex(function(idea) {
-//     return idea.id === targetId;
-//   })
-//   parsedItems.splice(itemIndex, 1);
-//   localStorage.setItem('ideaArray', JSON.stringify(parsedItems));
-//   };
+deleteFromStorage(targetId) {
+  var parsedItems = JSON.parse(localStorage.getItem('allTaskCards'));
+  var itemIndex = parsedItems.findIndex(function(task) {
+    return task.id === targetId;
+  })
+  parsedItems.splice(itemIndex, 1);
+  localStorage.setItem('allTaskCards', JSON.stringify(parsedItems));
+  console.log(itemIndex)
+  };
+
+  
 
 // updateToDo (should update the todo’s title and urgency)
 // updateTask (should update a task’s content and if it has been completed)
