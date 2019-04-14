@@ -11,15 +11,15 @@ var allTaskCards = JSON.parse(localStorage.getItem('allTaskCards'))||[];
 makeTaskButton.addEventListener('click', bigBoy);
 taskItemButton.addEventListener('click', populateNavList);
 window.addEventListener('load', restoreCards);
+cardField.addEventListener('click', deleteCard);
 
 function populateNavList(event){
-  var taskList = document.createElement('ul');
-  navTaskArea.append(taskList);
-  taskList.innerHTML =
-      `<ul>
+  var navList =
+      `<ul id="card-list">
       <li><img class="task-item-delete" src="images/delete.svg"> 
       <span class="nav-list-item">${taskItemInput.value}</span></li>
        </ul>`
+      navTaskArea.insertAdjacentHTML('beforebegin',navList)
       makeTaskListObject(taskItemInput.value);
       clearTaskItemInput(); 
 };
@@ -41,9 +41,14 @@ function bigBoy(event){
   var todoList = instantiateTask()
   populateCard(todoList)
   taskItems = [];
+  clearNavList();
   clearTaskItemInput()
-  // clearNavList();
   console.log(taskItems)
+  };
+
+ function clearNavList(){
+  areaToClear = document.getElementById('card-list');
+  areaToClear.remove();
   };
 
   //Instantiates a new instance of the big class Task, puts in big array
@@ -93,6 +98,15 @@ function findListItems(tasks){
  console.log(gotListItems)
 };
 
+function deleteCard(e) {
+  if(e.target.className === "delete-card") {
+  e.target.closest('.task-card-container').remove();
+  var removedTask = new Task();
+  var targetId = parseInt(e.target.closest('.task-card-container').dataset.id);
+  removedTask.deleteFromStorage(targetId);
+}
+};
+
 function restoreCards() {
   allTaskCards = allTaskCards.map(function(oldTodo) {
     var restoredCards = new Task(oldTodo.title, oldTodo.items, oldTodo.id, oldTodo.urgent);
@@ -100,5 +114,3 @@ function restoreCards() {
     return restoredCards;
   })
 };
-
-
