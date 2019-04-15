@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   /* border: 1px solid pink; */
+  font-family: 'Open Sans', sans-serif;
 }
 
 body {
@@ -39,7 +40,6 @@ header {
   height: 20px;
 }
 h1 {
-  font-family: 'Open Sans', sans-serif;
   font-weight: 800 extra bold;
   font-size:36px;
   color: white;
@@ -62,10 +62,14 @@ nav {
 
 }
 label {
+  align-self: flex-start;
   color: #F3F6F7;
-  font-family: 'Open Sans', sans-serif;
+  font-size: 85%;
   font-weight: 400;
-  margin-right: 300px;
+  display: inline-block;
+  padding-left: 25px;
+  width: 150px;
+  
 }
 
 .button {
@@ -73,7 +77,6 @@ label {
   border-color: #1F1F3D;
   border-radius: 3px;
   color: white;
-  font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   margin-top: 25px;
   height: 45px;
@@ -138,29 +141,61 @@ main {
   font-size: 24px;
   width: 70%;
 }
+ul {
+  list-style: none;
+  padding-left: 5px;
+}
 
 .task-card-container {
-  background-color: white;
-  border: 1px solid gray;
+  background-color: #FAFDFF;
+  border: 1px solid #C7D3D8;
   display: flex;
   flex-direction: column;
+  font-size: 75%;
   align-items: center;
-  width: 400px;
-  height: 400px;
+  width: 200px;
 }
 
 .card-header {
-  border-bottom: 1px solid gray;
+  align-items: flex-start;
+  color: #1F1F3D;
+  display: flex;
+  font-size: 16px;
   width: 100%;
 }
 
+.card-title {
+  padding: 5px;
+  margin: 0;
+}
+.card-line{
+  border: 1px solid #C7D3D8;
+  width: 98%;
+}
 .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
 }
 .card-footer{
-  border-top: 1px solid gray;
-  display: flex;
   align-items: space-between;
-  height: 20%;
-  width: 100%
+  color: #3C6577;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+}
+
+h6{
+  margin: auto;
+}
+
+.urgent-container,
+.delete-container {
+  display: flex;
+  flex-direction: column;
+  height: 50px;
+  align-items:center;
+  justify-content: flex-start;
 }
