@@ -12,16 +12,24 @@ makeTaskButton.addEventListener('click', bigBoy);
 taskItemButton.addEventListener('click', populateNavList);
 window.addEventListener('load', restoreCards);
 cardField.addEventListener('click', deleteCard);
+navTaskArea.addEventListener('click', deleteNavTaskListItem);
 
 function populateNavList(event){
   var navList =
-      `<ul id="card-list">
-      <li><img class="task-item-delete" src="images/delete.svg"> 
-      <span class="nav-list-item">${taskItemInput.value}</span></li>
-       </ul>`
+      `<ul class="card-list">
+      <li class="nav-list-item-holder"><input type="image" class="task-item-delete" src="images/delete.svg">
+      ${taskItemInput.value}</li>
+      </ul>`
       navTaskArea.insertAdjacentHTML('beforebegin',navList)
       makeTaskListObject(taskItemInput.value);
       clearTaskItemInput(); 
+};
+
+function deleteNavTaskListItem(e){
+  if(e.target.className === "task-item-delete") {
+    e.target.closest('.nav-list-item-holder').remove();
+    console.log(e.target);
+  }
 };
 
 function clearTaskItemInput(){
@@ -41,15 +49,18 @@ function bigBoy(event){
   var todoList = instantiateTask()
   populateCard(todoList)
   taskItems = [];
-  clearNavList();
   clearTaskItemInput()
+  clearNavList();
   console.log(taskItems)
   };
 
+  //clears the nav area todo list upon creation of card
  function clearNavList(){
-  areaToClear = document.getElementById('card-list');
-  areaToClear.remove();
-  };
+  areaToClear = document.querySelector(".nav-task-list")
+  console.log(areaToClear)
+  areaToClear.innerHTML = "";
+  taskTitleInput.value = "";
+};
 
   //Instantiates a new instance of the big class Task, puts in big array
   function instantiateTask(newTask) {
@@ -66,19 +77,25 @@ function bigBoy(event){
 function populateCard(text) {
   var newCard = 
         `<article data-id=${text.id} class="task-card-container">
-        <section class="card-header>
-        <h2 contentEditable = "true" class="card-title">${text.title}</h2>
+        <section class="card-header">
+        <h2 class="card-title">${text.title}</h2>
         </section>
+        <hr class="card-line"></hr>
         <body class="card-body"> 
         <ul class="card-list" data-id=${text.id}>
         ${findListItems(text)}
         </ul>
         </body>
+        <hr class="card-line"></hr>
         <section class="card-footer">
-          <input class="urgent-icon" type="image" height ="15px" src="images/urgent.svg" alt="mark task urgent button">
-          <h6>Urgent</h6>
-          <input class="delete-card" type="image" height="15px"src="images/delete.svg" alt="delete card button">
-          <h6>Delete</h6>
+        <div class="urgent-container">
+          <input class="urgent-icon" type="image" height ="20px" src="images/urgent.svg" alt="mark task urgent button">
+          <h6>URGENT</h6>
+        </div>
+        <div class="delete-container">
+          <input class="delete-card" type="image" height="20px"src="images/delete.svg" alt="delete card button">
+          <h6>DELETE</h6>
+         </div>
           </section>
         </article>`
         cardField.insertAdjacentHTML('afterbegin', newCard);
@@ -90,7 +107,7 @@ function findListItems(tasks){
   for(var i= 0; i < tasks.items.length; i++) {
     gotListItems +=
     `<li class="list-item>
-    <input type="image" class="done-icon" src="images/checkbox.svg" data-id=${tasks.items[i].id} id="index ${i}"/>
+    <input type="image" class="done-icon" src="images/checkbox.svg" data-id=${tasks.items[i].id} id=index ${i}/>
     <p class="card-todo-item">${tasks.items[i].content}</p>
      </li>`
   }
