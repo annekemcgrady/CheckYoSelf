@@ -22,7 +22,8 @@ header {
   width: 300px;
 }
 .search-input {
-  border-radius: 3px;
+  border-radius: 0 3px 3px 0;
+  border-style:  none;
   height: 40px;
   padding-left: 10px;
   width: 90%; 
@@ -61,7 +62,7 @@ nav {
 
 
 }
-label {
+.nav form label {
   align-self: flex-start;
   color: #F3F6F7;
   font-size: 85%;
@@ -83,14 +84,18 @@ label {
   width: 90%;
 }
 
+.disabled {
+  background-color: lightgray;
+  cursor: not-allowed;
+}
+
 .task-item-delete {
   height: 30px;
 }
 
-.nav-list-item {
+.nav-list-item-holder {
   color: white;
-  font-size: 16px;
-  
+  font-size: 16px; 
 }
 
 div {
@@ -110,6 +115,7 @@ div {
 }
 
 .plus-icon {
+  background-color: transparent;
   height: 25px;
 }
 
@@ -137,22 +143,25 @@ main {
 .card-field {
   background-color: #F3F6F7;
   border: 1px solid #3C6577;
+  display: flex;
+  flex-wrap: wrap;
   font-family: 'Open Sans', sans-serif;
   font-size: 24px;
   width: 70%;
 }
+
 ul {
   list-style: none;
   padding-left: 5px;
 }
 
 .task-card-container {
+  align-items: center;
   background-color: #FAFDFF;
   border: 1px solid #C7D3D8;
   display: flex;
   flex-direction: column;
   font-size: 75%;
-  align-items: center;
   width: 200px;
 }
 
@@ -178,13 +187,17 @@ ul {
   justify-content: flex-start;
   width: 100%;
 }
-.card-footer{
+.card-footer {
   align-items: space-between;
   color: #3C6577;
   display: flex;
   justify-content: center;
   padding: 10px;
   width: 100%;
+}
+.done-icon {
+  background-color: transparent;
+  height: 15px;
 }
 
 h6{
@@ -195,7 +208,11 @@ h6{
 .delete-container {
   display: flex;
   flex-direction: column;
-  height: 50px;
+  height: 30px;
   align-items:center;
   justify-content: flex-start;
+}
+
+@media screen and (max-width: 700px) {
+
 }
