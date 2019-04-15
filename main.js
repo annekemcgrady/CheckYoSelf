@@ -1,47 +1,112 @@
+//query selectors
 var searchInput = document.querySelector('.search-input');
-var taskTitleInput = document.querySelector('.task-title');
 var navTaskArea = document.querySelector('.nav-task-list');
+var taskTitleInput = document.querySelector('.task-title');
 var taskItemInput = document.querySelector('.task-item');
 var taskItemButton = document.querySelector('.add-task-icon-box');
 var makeTaskButton = document.querySelector('.make-task-button');
+var clearAllButton = document.querySelector('.clear-all-button')
 var cardField = document.querySelector('.card-field');
 var taskItems = [];
 var allTaskCards = JSON.parse(localStorage.getItem('allTaskCards'))||[];
 
+//event listeners
 makeTaskButton.addEventListener('click', bigBoy);
 taskItemButton.addEventListener('click', populateNavList);
 window.addEventListener('load', restoreCards);
+window.addEventListener('load', disableButtons);
+window.addEventListener('load', enableButtons);
+taskTitleInput.addEventListener('keyup', disableButtons)
+taskTitleInput.addEventListener('keyup', enableButtons)
+taskItemInput.addEventListener('keyup', disableButtons)
+taskItemInput.addEventListener('keyup', enableButtons)
 cardField.addEventListener('click', deleteCard);
 navTaskArea.addEventListener('click', deleteNavTaskListItem);
+clearAllButton.addEventListener('click', clearAll);
+
+//functions
+function disableButtons(e) {
+  if(taskTitleInput.value ==="" && taskItemInput.value === ""){
+  makeTaskButton.disabled = true;
+  makeTaskButton.classList.add('disabled');
+  taskItemButton.disabled = true;
+  taskItemButton.classList.add('disabled');
+  clearAllButton.disabled = true;
+  clearAllButton.classList.add('disabled');
+  }
+};
+
+function enableButtons(e){
+  if(taskTitleInput.value !=="" && taskItemInput.value !== ""){
+    makeTaskButton.disabled = false;
+    makeTaskButton.classList.remove('disabled');
+    taskItemButton.disabled = false;
+    taskItemButton.classList.remove('disabled');
+    clearAllButton.disabled = false;
+    clearAllButton.classList.remove('disabled');
+  }
+};
 
 function populateNavList(event){
   var navList =
-      `<ul class="card-list">
+      `<ul class="nav-list">
       <li class="nav-list-item-holder"><input type="image" class="task-item-delete" src="images/delete.svg">
       ${taskItemInput.value}</li>
       </ul>`
       navTaskArea.insertAdjacentHTML('beforebegin',navList)
       makeTaskListObject(taskItemInput.value);
       clearTaskItemInput(); 
+      disableButtons();
+      enableButtons();
 };
-
+//remove individual items from nav task list
 function deleteNavTaskListItem(e){
-  if(e.target.className === "task-item-delete") {
-    e.target.closest('.nav-list-item-holder').remove();
-    console.log(e.target);
+  console.log(e.target);
+  if(e.target.className === 'task-item-delete') {
+    console.log("HELLO!")
+    var items = taskItems;
+    var itemIndex = items.findIndex(function(listitem) {
+    return listitem.id === targetId;
+    })
+    items.splice(itemIndex, 1);
   }
+    e.target.closest('li').remove();
+  
+    console.log(items)
+  
 };
 
 function clearTaskItemInput(){
   taskItemInput.value = "";
 };
+function clearTitleInput(){
+  taskTitleInput.value="";
+};
+
+//clears the nav area todo list upon creation of card
+function clearNavList(e){
+  var navListToClear = document.querySelector('.nav-list');
+  while (navListToClear.firstChild){
+  navListToClear.removeChild(navListToClear.firstChild);
+  }
+  clearTitleInput();
+};
+
+function clearAll(e){
+  e.preventDefault();
+  console.log('CLEAR ALL FIRING');
+  clearTaskItemInput();
+  clearTitleInput();
+  clearNavList();
+  taskItems = [];
+  disableButtons();
+  enableButtons();
+}
 
 //Makes the little array of list item objects
 function makeTaskListObject(text){
 var object = new TaskItems(text)
-console.log(object);
 taskItems.push(object);
-console.log(taskItems);
 };
 
 //big function to instantiate, populate, clear nav inputs & list
@@ -49,28 +114,21 @@ function bigBoy(event){
   var todoList = instantiateTask()
   populateCard(todoList)
   taskItems = [];
-  clearTaskItemInput()
-  clearNavList();
-  console.log(taskItems)
+  clearTaskItemInput();
+  clearTitleInput();
+  clearNavList(event);
+  console.log(taskItems);
+  disableButtons(event);
+  enableButtons(event);
   };
-
-  //clears the nav area todo list upon creation of card
- function clearNavList(){
-  areaToClear = document.querySelector(".nav-task-list")
-  console.log(areaToClear)
-  areaToClear.innerHTML = "";
-  taskTitleInput.value = "";
-};
 
   //Instantiates a new instance of the big class Task, puts in big array
   function instantiateTask(newTask) {
     var newTask = new Task(taskTitleInput.value, taskItems);
-    console.log(newTask)
     allTaskCards.push(newTask);
     console.log(allTaskCards)
     newTask.saveToStorage(allTaskCards);
     return newTask;
-    console.log(allTaskCards)
   };
 
   //populates the card on the DOM
@@ -107,9 +165,9 @@ function findListItems(tasks){
   for(var i= 0; i < tasks.items.length; i++) {
     gotListItems +=
     `<li class="list-item>
-    <input type="image" class="done-icon" src="images/checkbox.svg" data-id=${tasks.items[i].id} id=index ${i}/>
-    <p class="card-todo-item">${tasks.items[i].content}</p>
-     </li>`
+    <input type="image" class="done-icon" src="images/checkbox.svg" height="15px" data-id=${tasks.items[i].id} id=index${i}/>
+    <label for="id=index${i}" class="card-todo-item">${tasks.items[i].content}</label>
+    </li>`
   }
  return gotListItems;
  console.log(gotListItems)
@@ -131,3 +189,17 @@ function restoreCards() {
     return restoredCards;
   })
 };
+
+// function updateDone(idea) {
+//   event.preventDefault();
+//   if (event.target.matches('.done-icon')){
+//   var targetParent = event.target.closest('.list-item');
+//   var parsedId = parseInt(targetParent.dataset.id)
+//   var targetId = allTaskCards.find(function(idea) {
+//   return idea.id === parsedId;
+//   })
+  
+//   targetId.doneToggle();
+//   restoreCards();
+//  } 
+// };

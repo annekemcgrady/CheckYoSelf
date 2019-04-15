@@ -21,10 +21,17 @@ deleteFromStorage(targetId) {
   console.log(itemIndex)
   };
 
-  
-
+  updateTask(targetId) {
+    this.done = !this.done;
+    if (this.done === false){
+      event.target.src = 'images/checkbox.svg';
+    } else { 
+      event.target.src = 'images/checkbox-active.svg'
+    }
+    this.saveToStorage();
+    };
+    
 // updateToDo (should update the todo’s title and urgency)
-// updateTask (should update a task’s content and if it has been completed)
 };
 
 class TaskItems {
