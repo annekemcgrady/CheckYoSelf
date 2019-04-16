@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  /* border: 1px solid pink; */
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -16,11 +15,13 @@ header {
   height: 10vh;
   padding: 0 15px 0 20px;
 }
+
 .search-form {
   align-items: center;
   display: flex;
   width: 300px;
 }
+
 .search-input {
   border-radius: 0 3px 3px 0;
   border-style:  none;
@@ -28,6 +29,7 @@ header {
   padding-left: 10px;
   width: 90%; 
 }
+
 .icon-holder{
   background-color: lightgray;
   border-radius: 3px 0 0 3px;
@@ -37,14 +39,17 @@ header {
   justify-content: center;
   width: 40px;
 }
+
 .search-icon {
   height: 20px;
 }
+
 h1 {
   font-weight: 800 extra bold;
   font-size:36px;
   color: white;
 }
+
 .yo {
   color: #FEC40E;
 }
@@ -55,11 +60,13 @@ nav {
   padding-top: 25px;
   width: 30%
 }
+
 .nav-form {
   align-items: center;
   display: flex;
   flex-direction: column;
 }
+
 .nav-form label {
   align-self: flex-start;
   color: #F3F6F7;
@@ -148,8 +155,8 @@ main {
   display: grid;
   grid-template-rows: repeat( 2, 1fr);
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  font-family: 'Open Sans', sans-serif;
   font-size: 24px;
+  padding: 5px;
   width: 70%;
 }
 
@@ -160,16 +167,26 @@ ul {
 
 .task-card-container {
   align-items: center;
-  background-color: #FAFDFF;
-  border: 1px solid #C7D3D8;
   display: flex;
   flex-direction: column;
   font-size: 75%;
+  justify-content: space-between;
   width: 200px;
+}
+
+.nonurgent {
+  background-color: #FAFDFF;
+  border: 1px solid #C7D3D8;
+}
+
+.urgent {
+  background-color: #FFE89D;
+  border: 1px solid #FFC30C;
 }
 
 .card-header {
   align-items: flex-start;
+  border-bottom: 1px solid #C7D3D8;
   color: #1F1F3D;
   display: flex;
   font-size: 16px;
@@ -188,19 +205,24 @@ ul {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 80%;
+  height: auto;
   width: 100%;
 }
 
 .card-list {
   width: 100%;
 }
+.list-item{
+  width: 80%;
+  background-color: red;
+}
 .card-footer {
   align-items: space-between;
   align-self: flex-end;
+  border-top: 1px solid #C7D3D8;
   color: #3C6577;
   display: flex;
-  height: 20%;
+  height: auto;
   justify-content: center;
   padding: 10px;
   width: 100%;
@@ -228,6 +250,48 @@ h6{
   justify-content: flex-start;
 }
 
+.greeting {
+  border: none;
+  width: 100%;
+}
+
 @media screen and (max-width: 700px) {
+header {
+  align-items: center;
+  flex-direction: column;
+  height: auto;
+  padding-bottom: 20px;
+}
+h1 {
+  font-weight: 800 extra bold;
+  font-size:48px;
+  color: white;
+}
+
+main {
+  flex-direction: column;
+  height: auto;
+}
+
+nav {
+  width: 100%;
+  padding-bottom: 20px;
+}
+.card-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.task-card-container {
+  margin: 15px;
+  width: 90%;
+}
+
+.greeting {
+  border: none;
+  width: 100%;
+}
 
 }

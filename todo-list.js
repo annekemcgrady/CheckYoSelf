@@ -1,5 +1,5 @@
 class Task {
-  constructor(title, items, id, urgent){
+  constructor(title, items){
     this.title = title;
     this.items = items;
     this.id = Date.now();
@@ -31,7 +31,20 @@ deleteFromStorage(targetId) {
     this.saveToStorage();
     };
     
-// updateToDo (should update the todo’s title and urgency)
+updateToDo(targetId) {
+  this.urgent =!this.urgent;
+  if (this.urgent === false){
+    event.target.src = 'images/urgent.svg';
+    event.target.parentNode.classList.add('.nonurgent');
+    event.target.parentNode.classList.remove('.urgent')
+  } else {
+    event.target.src = 'images/urgent-active.svg';
+    event.target.parentNode.classList.add('.urgent');
+    event.target.parentNode.classList.remove('.nonurgent')
+  }
+  this.saveToStorage();
+
+}
 };
 
 class TaskItems {
