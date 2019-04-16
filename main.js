@@ -1,7 +1,8 @@
 //query selectors
 var greetingDOM = document.querySelector('.greeting');
 var searchInput = document.querySelector('.search-input');
-var navTaskArea = document.querySelector('.nav-task-list');
+var form = document.querySelector('.nav-form');
+var navTaskArea = document.querySelector('.nav-task-list')
 var taskTitleInput = document.querySelector('.task-title');
 var taskItemInput = document.querySelector('.task-item');
 var taskItemButton = document.querySelector('.plus-icon');
@@ -14,7 +15,7 @@ var allTaskCards = JSON.parse(localStorage.getItem('allTaskCards'))||[];
 //event listeners
 makeTaskButton.addEventListener('click', bigBoy);
 makeTaskButton.addEventListener('click', greeting)
-taskItemButton.addEventListener('click', populateNavList);
+taskItemButton.addEventListener('click', littleBoy);
 window.addEventListener('load', restoreCards);
 window.addEventListener('load', disableButtons);
 window.addEventListener('load', enableButtons);
@@ -25,21 +26,24 @@ taskItemInput.addEventListener('keyup', disableButtons)
 taskItemInput.addEventListener('keyup', enableButtons)
 cardField.addEventListener('click', deleteCard);
 cardField.addEventListener('click', greeting)
+cardField.addEventListener('click', updateUrgent)
 navTaskArea.addEventListener('click', deleteNavItem);
 clearAllButton.addEventListener('click', clearAll);
 
-//functions
+form.addEventListener('click', function(e) {
+  e.preventDefault();
+  deleteNavItem(e);
+})
 
+//functions
 function greeting(event){
-  if(!allTaskCards.length){
+  var elements = cardField.querySelectorAll('.task-card-container')
+  if(!elements.length){
   greetingDOM.removeAttribute('hidden', true)
-  console.log('show greeting')
-  } else if(allTaskCards.length) {
+  } else if(elements.length) {
     greetingDOM.setAttribute('hidden', true)
-    console.log('hide greeting')
   }
 };
-
 
 function disableButtons(e) {
   if(taskTitleInput.value ==="" && taskItemInput.value === ""){
@@ -63,15 +67,28 @@ function enableButtons(e){
   }
 };
 
-function populateNavList(event) {
-  event.preventDefault();
+function littleBoy(event){
+event.preventDefault();
+var object = makeTaskListObject()
+populateNavList(object)
+taskItems.push(object)
+clearTaskItemInput(); 
+disableButtons();
+enableButtons();
+};
+
+function makeTaskListObject(){
+  var object = new TaskItems(taskItemInput.value)
+  return object;
+  };
+
+function populateNavList(info) {
   var navList =
       `<ul class="nav-list">
-      <li class="nav-list-item-holder"><input type="image" class="task-item-delete" src="images/delete.svg" height="15px">
-      ${taskItemInput.value}</li>
+      <li class="nav-list-item-holder"><input type="image" data-id="${info.id}" class="task-item-delete" src="images/delete.svg" height="15px">
+      ${info.content}</li>
       </ul>`
       navTaskArea.insertAdjacentHTML('beforebegin', navList)
-      makeTaskListObject(taskItemInput.value);
       clearTaskItemInput(); 
       disableButtons();
       enableButtons();
@@ -86,6 +103,22 @@ function deleteNavItem(e){
   } 
 };
 
+// function deleteNavItem(e) {
+//   e.preventDefault();
+//   var targetId = parseInt(e.target.closest(".task-item-delete").dataset.id);
+//   var index = 0;
+
+//   for(var i=0; i < taskItems.length ; i++){
+//     if(taskItems[i].id === targetId) {
+//       index = taskItems.indexOf(taskItems[i])
+//       console.log(index)
+//       taskItems.splice(index,1)
+//       console.log(taskItems)
+//     }
+//   }
+//   e.target.closest("li").remove(); 
+// }
+
 function clearTaskItemInput(){
   taskItemInput.value = "";
 };
@@ -95,10 +128,13 @@ function clearTitleInput(){
 
 //clears the nav area todo list upon creation of card
 function clearNavList(e){
-  console.log('RUNNING CLEAR NAV')
-  var navListToClear = document.querySelector('.nav-list');
-  navListToClear.innerHTML ="";
+  var areaToClear = document.querySelectorAll('.nav-list');
+  areaToClear.forEach(function(element){
+    element.innerHTML = "";
+  })
+  navTaskArea.innerHTML = "";
   clearTitleInput();
+  clearTaskItemInput()
 };
 
 function clearAll(e){
@@ -110,29 +146,24 @@ function clearAll(e){
   disableButtons();
   enableButtons();
   clearNavList();
-}
-
-//Makes the little array of list item objects
-function makeTaskListObject(text){
-var object = new TaskItems(text)
-taskItems.push(object);
 };
 
 //big function to instantiate, populate, clear nav inputs & list
 function bigBoy(event){
   var todoList = instantiateTask()
   populateCard(todoList)
-  taskItems = [];
   clearTaskItemInput();
   clearTitleInput();
-  clearNavList(event);
-  console.log(taskItems);
   disableButtons(event);
   enableButtons(event);
+  clearNavList(event);
+  console.log(taskItems);
+  taskItems = [];
   };
 
   //Instantiates a new instance of the big class Task, puts in big array
-  function instantiateTask(newTask) {
+  function instantiateTask() {
+    console.log(taskTitleInput.value, taskItems)
     var newTask = new Task(taskTitleInput.value, taskItems);
     allTaskCards.push(newTask);
     console.log(allTaskCards)
@@ -143,17 +174,15 @@ function bigBoy(event){
   //populates the card on the DOM
 function populateCard(text) {
   var newCard = 
-        `<article data-id=${text.id} class="task-card-container">
+        `<article data-id=${text.id} class="task-card-container nonurgent">
         <section class="card-header">
         <h2 class="card-title">${text.title}</h2>
         </section>
-        <hr class="card-line"></hr>
         <body class="card-body"> 
         <ul class="card-list" data-id=${text.id}>
         ${findListItems(text)}
         </ul>
         </body>
-        <hr class="card-line"></hr>
         <section class="card-footer">
         <div class="urgent-container">
           <input class="urgent-icon" type="image" height ="20px" src="images/urgent.svg" alt="mark task urgent button">
@@ -171,7 +200,9 @@ function populateCard(text) {
 //go through the array of Tasks and append the content of property "items" of each to the card on the DOM
 function findListItems(tasks){
   var gotListItems ='';
-  for(var i= 0; i < tasks.items.length; i++) {
+  console.log(tasks, tasks.items.length)
+  for(var i = 0; i < tasks.items.length; i++) {
+    console.log('hello')
     gotListItems +=
     `<li class="list-item>
     <input type="checkbox" class="done-icon" data-id=${tasks.items[i].id} id=index${i}>
@@ -184,21 +215,35 @@ function findListItems(tasks){
 function deleteCard(e) {
   if(e.target.className === "delete-card") {
   e.target.closest('.task-card-container').remove();
-  greeting(e);
   var removedTask = new Task();
   var targetId = parseInt(e.target.closest('.task-card-container').dataset.id);
-  removedTask.deleteFromStorage(targetId);
-}
-
+  removedTask.deleteFromStorage(targetId); 
+  greeting(e);
+  }
 };
 
-function restoreCards() {
+function restoreCards(e) {
   allTaskCards = allTaskCards.map(function(oldTodo) {
     var restoredCards = new Task(oldTodo.title, oldTodo.items, oldTodo.id, oldTodo.urgent);
     populateCard(restoredCards);
     return restoredCards;
   })
 };
+
+function updateUrgent(event) {
+    event.preventDefault();
+    if (event.target.matches('.urgent-icon')){
+    var targetParent = event.target.closest('.task-card-container');
+    var parsedId = parseInt(targetParent.dataset.id)
+    var targetId = allTaskCards.find(function(idea) {
+    return idea.id === parsedId;
+    })
+    targetId.updateToDo();
+    // restoreCards();
+   } 
+   console.log(targetParent)
+  };
+
 
 // function updateDone(idea) {
 //   event.preventDefault();
@@ -208,8 +253,7 @@ function restoreCards() {
 //   var targetId = allTaskCards.find(function(idea) {
 //   return idea.id === parsedId;
 //   })
-  
-//   targetId.doneToggle();
+//   targetId.updateTask();
 //   restoreCards();
 //  } 
 // };
