@@ -96,10 +96,8 @@ function populateNavList(info) {
 //remove individual items from nav task list
 function deleteNavItem(e){
   e.preventDefault();
-  console.log('before')
   if (e.target.className ==='task-item-delete'){
     e.target.closest('li').remove();
-    console.log("after")
   } 
 };
 
@@ -139,7 +137,6 @@ function clearNavList(e){
 
 function clearAll(e){
   e.preventDefault();
-  console.log('CLEAR ALL FIRING');
   clearTaskItemInput();
   clearTitleInput();
   taskItems = [];
@@ -157,16 +154,13 @@ function bigBoy(event){
   disableButtons(event);
   enableButtons(event);
   clearNavList(event);
-  console.log(taskItems);
   taskItems = [];
   };
 
   //Instantiates a new instance of the big class Task, puts in big array
   function instantiateTask() {
-    console.log(taskTitleInput.value, taskItems)
     var newTask = new Task(taskTitleInput.value, taskItems);
     allTaskCards.push(newTask);
-    console.log(allTaskCards)
     newTask.saveToStorage(allTaskCards);
     return newTask;
   };
@@ -191,8 +185,8 @@ function populateCard(text) {
         <div class="delete-container">
           <input class="delete-card" type="image" height="20px"src="images/delete.svg" alt="delete card button">
           <h6>DELETE</h6>
-         </div>
-          </section>
+        </div>
+        </section>
         </article>`
         cardField.insertAdjacentHTML('afterbegin', newCard);
 };
@@ -200,11 +194,9 @@ function populateCard(text) {
 //go through the array of Tasks and append the content of property "items" of each to the card on the DOM
 function findListItems(tasks){
   var gotListItems ='';
-  console.log(tasks, tasks.items.length)
   for(var i = 0; i < tasks.items.length; i++) {
-    console.log('hello')
     gotListItems +=
-    `<li class="list-item>
+    `<li class="list-item">
     <input type="checkbox" class="done-icon" data-id=${tasks.items[i].id} id=index${i}>
     <label for="id=index${i}" class="card-todo-item">${tasks.items[i].content}</label>
     </li>`
@@ -241,7 +233,6 @@ function updateUrgent(event) {
     targetId.updateToDo();
     // restoreCards();
    } 
-   console.log(targetParent)
   };
 
 
