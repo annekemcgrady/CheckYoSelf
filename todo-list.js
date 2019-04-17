@@ -9,42 +9,35 @@ class Task {
   saveToStorage() { 
     var stringifiedToDoArray = JSON.stringify(allTaskCards);
     localStorage.setItem('allTaskCards', stringifiedToDoArray);
+  };
+
+  deleteFromStorage(targetId) {
+    var parsedItems = JSON.parse(localStorage.getItem('allTaskCards'));
+    var itemIndex = parsedItems.findIndex(function(task) {
+      return task.id === targetId;
+    })
+    parsedItems.splice(itemIndex, 1);
+    localStorage.setItem('allTaskCards', JSON.stringify(parsedItems));
     };
 
-deleteFromStorage(targetId) {
-  var parsedItems = JSON.parse(localStorage.getItem('allTaskCards'));
-  var itemIndex = parsedItems.findIndex(function(task) {
-    return task.id === targetId;
-  })
-  parsedItems.splice(itemIndex, 1);
-  localStorage.setItem('allTaskCards', JSON.stringify(parsedItems));
-  console.log(itemIndex)
+  updateToDo(targetId) {
+    this.urgent =!this.urgent;
+    if (this.urgent === false){
+      event.target.src = 'images/urgent.svg';
+      event.target.parentNode.parentNode.parentNode.classList.add('nonurgent');
+      event.target.parentNode.parentNode.parentNode.classList.remove('urgent');
+      this.saveToStorage();
+    } else {
+      event.target.src = 'images/urgent-active.svg';
+      event.target.parentNode.parentNode.parentNode.classList.add('urgent');
+      event.target.parentNode.parentNode.parentNode.classList.remove('nonurgent');
+      this.saveToStorage();
+    }
   };
 
   updateTask(targetId) {
-    this.done = !this.done;
-    if (this.done === false){
-      event.target.src = 'images/checkbox.svg';
-    } else { 
-      event.target.src = 'images/checkbox-active.svg'
-    }
-    this.saveToStorage();
-    };
-    
-updateToDo(targetId) {
-  this.urgent =!this.urgent;
-  if (this.urgent === false){
-    event.target.src = 'images/urgent.svg';
-    event.target.parentNode.classList.add('.nonurgent');
-    event.target.parentNode.classList.remove('.urgent')
-  } else {
-    event.target.src = 'images/urgent-active.svg';
-    event.target.parentNode.classList.add('.urgent');
-    event.target.parentNode.classList.remove('.nonurgent')
+    this.done = !this.done; 
   }
-  this.saveToStorage();
-
-}
 };
 
 class TaskItems {
