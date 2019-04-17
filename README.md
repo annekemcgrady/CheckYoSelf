@@ -7,7 +7,7 @@ Check Yo' Self is a to-do list making application.  The user inputs a to-do list
 
 #Screenshot from webpage
 
-![Anneke's Check Yo Self]()
+![Anneke's Check Yo Self](images/screenshot.png)
 
 
 #Link to my GitHub pages
